@@ -7,9 +7,21 @@ using UnityEngine.XR;
 
 public class UnitActionsSystem : MonoBehaviour
 {
+    public static UnitActionsSystem Instance { get; private set; }
     public event EventHandler OnSelectedUnitChanged;
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitLayerMask;
+
+    private void Awake()
+    {
+        if( Instance != null )
+        {
+            Debug.LogError("There is more than one UnitActionsSystem! " + transform + " - " + Instance);
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     private void Update()
     {
