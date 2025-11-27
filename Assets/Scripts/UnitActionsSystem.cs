@@ -32,7 +32,7 @@ public class UnitActionsSystem : MonoBehaviour
             {
                 return;
             }
-            selectedUnit.Move(MouseWorld.GetPosition());
+            selectedUnit.GetMoveAction().Move(MouseWorld.GetPosition());
         }
     }
 
