@@ -39,6 +39,14 @@ public class UnitActionsSystem : MonoBehaviour
                 selectedUnit.GetMoveAction().Move(mouseGridPosition);
             }
         }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            if(selectedUnit != null)
+            {
+                selectedUnit.GetSpinAction().Spin();
+            }
+        }
     }
 
     private bool TryHnadleUnitSelection()
