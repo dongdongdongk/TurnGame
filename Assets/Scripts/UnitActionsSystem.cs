@@ -38,11 +38,17 @@ public class UnitActionsSystem : MonoBehaviour
             return;
         }
 
+        // UI 클릭 체크 추가
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (TryHnadleUnitSelection())
         {
             return;
         }
-        
+
         HandleSelectedAction();
 
 
@@ -52,20 +58,13 @@ public class UnitActionsSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
-            switch (selectedAction)
+
+            if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
-                case MoveAction moveAction:
-                    if (moveAction.IsValidActionGridPosition(mouseGridPosition))
-                    {
-                        SetBusy();
-                        moveAction.Move(mouseGridPosition, ClearBusy);
-                    }
-                    break;
-                case SpinAction spinAction:
-                    SetBusy();
-                    spinAction.Spin(ClearBusy);
-                    break;
+                SetBusy();
+                selectedAction.TakeAction(mouseGridPosition, ClearBusy);
             }
         }
     }
@@ -90,6 +89,11 @@ public class UnitActionsSystem : MonoBehaviour
             {
                 if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
                 {
+                    if (unit == selectedUnit)
+                    {
+                        // 이미 선택된 유닛
+                        return false;
+                    }
                     SetSelectedUnit(unit);
                     return true;
                 }
@@ -116,4 +120,10 @@ public class UnitActionsSystem : MonoBehaviour
     {
         return selectedUnit;
     }
+
+    public BaseAction GetSelectedAction()
+    {
+        return selectedAction;
+    }
+
 }

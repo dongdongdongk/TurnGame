@@ -929,7 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636c08e4545e37d40a157c2e882af58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionButtonPrefab: {fileID: 2080434505984150339, guid: 6bdb2d63b45df414a9825a566e6c5807,
+  actionButtonPrefab: {fileID: 7257372003712664920, guid: 1f96f21239491a74baa8cef786d3233c,
     type: 3}
   actionButtonContainerTransform: {fileID: 1365596542}
 --- !u!1 &1172479968
@@ -1095,7 +1095,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7921459401536527028, guid: 898226907626ad444a59fbebf99940ea, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
