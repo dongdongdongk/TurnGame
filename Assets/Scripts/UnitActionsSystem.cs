@@ -41,6 +41,11 @@ public class UnitActionsSystem : MonoBehaviour
             return;
         }
 
+        if (!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
+
         // UI 클릭 체크 추가
         if (EventSystem.current.IsPointerOverGameObject())
         {
@@ -106,6 +111,12 @@ public class UnitActionsSystem : MonoBehaviour
                     if (unit == selectedUnit)
                     {
                         // 이미 선택된 유닛
+                        return false;
+                    }
+
+                    if (unit.IsEnemy())
+                    {
+                        // 적 유닛 선택 불가
                         return false;
                     }
                     SetSelectedUnit(unit);
