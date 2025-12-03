@@ -57,6 +57,11 @@ public class Unit : MonoBehaviour
         return gridPosition;
     }
 
+    public Vector3 GetWorldPosition()
+    {
+        return transform.position;
+    }
+
     public BaseAction[] GetBaseActionArray()
     {
         return baseActionArray;
@@ -112,4 +117,8 @@ public class Unit : MonoBehaviour
         return isEnemy;
     }
 
+    public void Damage(int damageAmount)
+    {
+        Debug.Log(transform.name + " took " + damageAmount + " damage!");
+    }
 }
