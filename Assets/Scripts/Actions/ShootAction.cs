@@ -20,7 +20,7 @@ public class ShootAction : BaseAction
     }
     private State state;
     private float totalSpinAmount;
-    private int maxShootDistance = 7;
+    private int maxShootDistance = 5;
     private float stateTimer;
     private Unit targetUnit;
     private bool canShootBullet;
@@ -164,6 +164,11 @@ public class ShootAction : BaseAction
     public int GetMaxShootDistance()
     {
         return maxShootDistance;
+    }
+
+    public override int GetActionPointCost()
+    {
+        return 2;
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
