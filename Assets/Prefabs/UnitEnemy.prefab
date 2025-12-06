@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1253412482845581505, guid: 898226907626ad444a59fbebf99940ea,
+        type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2198186855542348436, guid: 898226907626ad444a59fbebf99940ea,
         type: 3}
       propertyPath: m_Name
@@ -22,7 +27,7 @@ PrefabInstance:
     - target: {fileID: 4998945754078529729, guid: 898226907626ad444a59fbebf99940ea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4998945754078529729, guid: 898226907626ad444a59fbebf99940ea,
         type: 3}
@@ -32,7 +37,7 @@ PrefabInstance:
     - target: {fileID: 4998945754078529729, guid: 898226907626ad444a59fbebf99940ea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4998945754078529729, guid: 898226907626ad444a59fbebf99940ea,
         type: 3}
