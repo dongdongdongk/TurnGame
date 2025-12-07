@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathNode : MonoBehaviour
+public class PathNode
 {
-    // Start is called before the first frame update
-    void Start()
+    private GridPosition gridPosition;
+    private int gCost;
+    private int hCost;
+    private int fCost;
+    private PathNode cameFromPathNode;
+
+    public PathNode(GridPosition gridPosition)
     {
-        
+        this.gridPosition = gridPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override string ToString()
     {
-        
+        return gridPosition.ToString();
+    }
+
+    public int GetGCost()
+    {
+        return gCost;
+    }
+    public int GetHCost()
+    {
+        return hCost;
+    }
+    public int GetFCost()
+    {
+        return fCost;
     }
 }

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Transform gridDebugObjectPrefab;
 
-    // Update is called once per frame
-    void Update()
+    private int width;
+    private int height;
+    private float cellSize;
+    private GridSystem<PathNode> gridSystem;
+
+    private void Awake()
     {
-        
+       gridSystem = new GridSystem<PathNode>(10, 10, 2f, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
+
+       gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
     }
 }
