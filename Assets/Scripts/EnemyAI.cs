@@ -41,7 +41,8 @@ public class EnemyAI : MonoBehaviour
                     if (TryTakeEnemyAIAction(SetStateTakingTurn))
                     {
                         state = State.Busy;
-                    } else
+                    }
+                    else
                     {
                         // 적들 액션 불가
                         TurnSystem.Instance.NextTurn();
@@ -90,46 +91,36 @@ public class EnemyAI : MonoBehaviour
         {
             if (!enemyUnit.CanSpendActionPointsToTakeAction(baseAction))
             {
+                Debug.Log($"[{enemyUnit.name}] {baseAction.GetActionName()} - Not enough action points");
                 continue;
             }
+
+            EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
+
+            Debug.Log($"[{enemyUnit.name}] {baseAction.GetActionName()} - BestScore: {(testEnemyAIAction != null ? testEnemyAIAction.actionValue.ToString() : "NULL")}");
+
             if (bestEnemyAIAction == null)
             {
-                bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                bestEnemyAIAction = testEnemyAIAction;
                 bestBaseAction = baseAction;
-            } else
+            }
+            else if (testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
             {
-                EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
-                if (testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
-                {
-                    bestEnemyAIAction = testEnemyAIAction;
-                    bestBaseAction = baseAction;
-                }
+                bestEnemyAIAction = testEnemyAIAction;
+                bestBaseAction = baseAction;
             }
         }
+
+        Debug.Log($"[{enemyUnit.name}] === FINAL DECISION: {(bestBaseAction != null ? bestBaseAction.GetActionName() : "NULL")} with score {(bestEnemyAIAction != null ? bestEnemyAIAction.actionValue.ToString() : "NULL")} ===");
 
         if (bestEnemyAIAction != null && enemyUnit.TrySpendActionPointsToTakeAction(bestBaseAction))
         {
             bestBaseAction.TakeAction(bestEnemyAIAction.gridPosition, onEnemyAIActionComplete);
             return true;
-        } 
-        else 
-        {
-            return false;    
         }
-
-        // SpinAction spinAction = enemyUnit.GetSpinAction();
-
-        // GridPosition actionGridPosition = enemyUnit.GetGridPosition();
-
-        // if (!spinAction.IsValidActionGridPosition(actionGridPosition))
-        // {
-        //     return false;
-        // }
-        // if (!enemyUnit.TrySpendActionPointsToTakeAction(spinAction))
-        // {
-        //     return false;
-        // }
-        // spinAction.TakeAction(actionGridPosition, onEnemyAIActionComplete);
-        // return true;
+        else
+        {
+            return false;
+        }
     }
 }

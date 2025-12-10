@@ -18,6 +18,7 @@ public class ShootAction : BaseAction
         Shooting,
         Cooloff
     }
+    [SerializeField] private LayerMask obstaclesLayerMask;
     private State state;
     private float totalSpinAmount;
     private int maxShootDistance = 5;
@@ -134,6 +135,19 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDir = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
+
+                float unitShoulderHeight = 1.7f;
+                if (Physics.Raycast(
+                    unit.GetWorldPosition() + Vector3.up * unitShoulderHeight,
+                    shootDir,
+                    Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()),
+                    obstaclesLayerMask))
+                {
+                    continue;
+                }
+
                 validGridPositionList.Add(testGridPosition);
             }
         }
@@ -175,10 +189,15 @@ public class ShootAction : BaseAction
     {
         Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
+        // 사격 가능하면 압도적으로 높은 점수
+        int score = 10000 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f);
+
+        Debug.Log($"[SHOOT ACTION] Target at {gridPosition}, Score: {score}");
+
         return new EnemyAIAction
         {
             gridPosition = gridPosition,
-            actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized())* 100f),
+            actionValue = score,
         };
     }
 
