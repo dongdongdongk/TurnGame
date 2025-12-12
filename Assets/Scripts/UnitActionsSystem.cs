@@ -21,6 +21,8 @@ public class UnitActionsSystem : MonoBehaviour
     private void Start()
     {
         SetSelectedUnit(selectedUnit);
+
+        Unit.OnAnyUnitDead += Unit_OnAnyUnitDead;
     }
 
     private void Awake()
@@ -151,6 +153,35 @@ public class UnitActionsSystem : MonoBehaviour
     public BaseAction GetSelectedAction()
     {
         return selectedAction;
+    }
+
+    private void Unit_OnAnyUnitDead(object sender, EventArgs e)
+    {
+        Unit deadUnit = sender as Unit;
+
+        // 죽은 유닛이 선택된 유닛인지 확인
+        if (selectedUnit == deadUnit)
+        {
+            // UnitManager에서 살아있는 아군 찾기
+            List<Unit> friendlyUnits = UnitManager.Instance.GetFriendlyUnitList();
+
+            if (friendlyUnits.Count > 0)
+            {
+                // 첫 번째 살아있는 아군 선택
+                SetSelectedUnit(friendlyUnits[0]);
+            }
+            else
+            {
+                // 아군이 모두 죽음
+                selectedUnit = null;
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 메모리 누수 방지
+        Unit.OnAnyUnitDead -= Unit_OnAnyUnitDead;
     }
 
 }
